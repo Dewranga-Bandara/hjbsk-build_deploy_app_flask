@@ -3,26 +3,26 @@ from Maths.mathematics import summation, subtraction, multiplication
 
 app = Flask("Mathematics Problem Solver")
 
+def perform_operation(route_function):
+    try:
+        num1 = float(request.args.get('num1'))
+        num2 = float(request.args.get('num2'))
+        result = route_function(num1, num2)
+        return str(result)
+    except ValueError:
+        return "Error: Please enter valid numerical values."
+
 @app.route("/sum")
 def sum_route():
-    num1 = float(request.args.get('num1'))
-    num2 = float(request.args.get('num2'))
-    result = summation(num1, num2)
-    return str(result)
+    return perform_operation(summation)
 
 @app.route("/sub")
 def sub_route():
-    num1 = float(request.args.get('num1'))
-    num2 = float(request.args.get('num2'))
-    result = subtraction(num1, num2)
-    return str(result)
+    return perform_operation(subtraction)
 
 @app.route("/mul")
 def mul_route():
-    num1 = float(request.args.get('num1'))
-    num2 = float(request.args.get('num2'))
-    result = multiplication(num1, num2)
-    return str(result) 
+    return perform_operation(multiplication)
 
 @app.route("/")
 def render_index_page():
